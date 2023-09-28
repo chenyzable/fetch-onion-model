@@ -1,0 +1,1 @@
+module.exports = require("@cyzeal/lint-config-lib/prettier")
