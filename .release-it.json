@@ -1,0 +1,15 @@
+{
+  "github": {
+    "release": false
+  },
+  "git": {
+    "commitMessage": "chore: release: v${version}"
+  },
+  "npm": {
+    "publish": true
+  },
+  "hooks": {
+    "before:init": "pnpm lint && pnpm test",
+    "after:bump": "echo 更新版本成功"
+  }
+}
