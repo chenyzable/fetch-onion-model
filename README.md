@@ -75,44 +75,44 @@ request('/somepath'})
 
 内置中间件
 
-retry是基于[fetch-retry](https://github.com/jonbern/fetch-retry)封装的错误重试中间件
+retry 是基于[fetch-retry](https://github.com/jonbern/fetch-retry)封装的错误重试中间件
 
 ```js
-import { create } from '@cyzeal/fetch-onion-model'
-import retry from '@cyzeal/fetch-onion-model/middleware/retry'
+import { create } from "@cyzeal/fetch-onion-model"
+import retry from "@cyzeal/fetch-onion-model/esm/middleware/retry"
 
-// 这个请求实例发出的每个请求发生错误都会没个2000ms重试一次，一共重试3次
-const request = create({}, [retry({retries: 3, retryDelay: 2000})])
+// 这个请求实例发出的每个请求发生错误都会每隔2000ms重试一次，一共重试3次
+const request = create({}, [retry({ retries: 3, retryDelay: 2000 })])
 
 // 可以覆盖默认的配置，下面这个请求仅当status为500时才会重试，一共重试2次
-request('https://examples.com/somepath',{
+request("https://examples.com/somepath", {
   retries: 2,
-  retryOn: [500]
+  retryOn: [500],
 })
 ```
 
-timeout是基于原生AboutController实现的超时取消请求
+timeout 是基于原生 AboutController 实现的超时取消请求
 
 ```js
-import { create } from '@cyzeal/fetch-onion-model'
-import timeout from '@cyzeal/fetch-onion-model/middleware/timeout'
+import { create } from "@cyzeal/fetch-onion-model"
+import timeout from "@cyzeal/fetch-onion-model/esm/middleware/timeout"
 
 // 这个请求实例发出的每个请求超过5秒未响应都会超时
 const request = create({}, [timeout(5000)])
 
 // 可以覆盖默认的配置，下面这个请求超时时间为10秒
-request('https://examples.com/somepath',{
-  timeout: 10000
+request("https://examples.com/somepath", {
+  timeout: 10000,
 })
 
 // 支持通过函数动态设置
-request('https://examples.com/somepath',{
+request("https://examples.com/somepath", {
   timeout: (ctx) => {
-    if(ctx.url.includes('uploadFile')){
+    if (ctx.url.includes("uploadFile")) {
       return 10000
     }
     return 3000
-  }
+  },
 })
 ```
 
@@ -154,15 +154,15 @@ request('/somepath'})
 	})
 ```
 
-### 在TypeScript中使用
+### 在 TypeScript 中使用
 
 ```ts
-import { create } from '@cyzeal/fetch-onion-model'
-import type {RequestOptions, MiddleWare} from '@cyzeal/fetch-onion-model'
+import { create } from "@cyzeal/fetch-onion-model"
+import type { RequestOptions, MiddleWare } from "@cyzeal/fetch-onion-model"
 
 interface Result<T> {
   success: boolean
-  msg: string;
+  msg: string
   data: T
 }
 
@@ -170,22 +170,21 @@ interface Data {
   content: string
 }
 
-const reportMiddleware:MiddleWare = async (ctx, next) => {
+const reportMiddleware: MiddleWare = async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url}`)
   await next()
   console.log(`${ctx.method} ${ctx.url} done. status: ${ctx.status}`)
 }
-const baseOptions:RequestOptions = {
-  baseUrl: 'https://examples.com'
+const baseOptions: RequestOptions = {
+  baseUrl: "https://examples.com",
 }
-const middlewares:MiddleWare[] = [reportMiddleware]
+const middlewares: MiddleWare[] = [reportMiddleware]
 const request = create(baseOptions, middlewares)
 
-const res = await request<Result<Data>>('/somepath')
-
+const res = await request<Result<Data>>("/somepath")
 ```
 
-### 在NodeJs中使用
+### 在 NodeJs 中使用
 
 ```js
 import { create } from '@cyzeal/fetch-onion-model'
@@ -210,8 +209,8 @@ RequestOptions
 | retries | 开启 retry 中间件后生效！请求失败重试次数 | number | - |
 | retryDelay | 开启 retry 中间件后生效！请求重试的间隔 | number \| (attempt: number, error: Error \| null, response: Response \| null) => number | - |
 | retryOn | 开启 retry 中间件后生效！判断请求失败的状态码集合 | number[] \| (attempt: number, error: Error \| null, response: Response \| null) => number[] | - |
-| fetch | 用于发起请求的fetch实例，可以传入`whatwg-fetch`或`isomorphic-fetch`导出的fetch对象 | Fetch | `globalThis.fetch` |
-| transformParams | 自定义对params的序列化，默认通过URLSearchParams的append后toString进行序列化，可以自定义通过`qs`库序列化来对数组等类型值的个性化处理 | (params: T)=> string | - |
-| transformResponse | 自定义对response的处理，默认如果响应头中包含`Content-Type: application/json`，会返回`response.json()`，否则会返回`response.text()` | (Response:Response) => T | - |
+| fetch | 用于发起请求的 fetch 实例，可以传入`whatwg-fetch`或`isomorphic-fetch`导出的 fetch 对象 | Fetch | `globalThis.fetch` |
+| transformParams | 自定义对 params 的序列化，默认通过 URLSearchParams 的 append 后 toString 进行序列化，可以自定义通过`qs`库序列化来对数组等类型值的个性化处理 | (params: T)=> string | - |
+| transformResponse | 自定义对 response 的处理，默认如果响应头中包含`Content-Type: application/json`，会返回`response.json()`，否则会返回`response.text()` | (Response:Response) => T | - |
 | onError | 请求发生错误的回调函数 | (error: Error, context: Context )=>void | - |
-| 支持原生Fetch Options的所有参数 | ... | ... | ... |
+| 支持原生 Fetch Options 的所有参数 | ... | ... | ... |

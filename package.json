@@ -1,34 +1,32 @@
 {
   "name": "@cyzeal/fetch-onion-model",
   "version": "0.0.1",
+  "description": "一个基于 Web Fetch Api 的轻量级 Http 请求增强工具，支持浏览器与 Node 环境，类似于 koa 的洋葱模型，以中间件形式扩展功能。",
   "sideEffects": false,
   "type": "module",
   "main": "lib/index.js",
   "module": "esm/index.js",
   "types": "esm/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./esm/index.js",
-      "require": "./lib/index.js",
-      "types": "./esm/index.d.ts"
-    },
-    "./middleware/*": {
-      "import": "./esm/middleware/*",
-      "require": "./lib/middleware/*",
-      "types": "./esm/middleware/*"
-    },
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "lib",
-    "esm"
-  ],
   "scripts": {
     "lint": "eslint src --max-warnings=0",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "build": "rimraf esm lib && rollup -c rollup.config.js"
   },
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./lib/index.js",
+      "types": "./esm/index.d.ts"
+    },
+    "./esm/middleware/*": "./esm/middleware/*",
+    "./lib/middleware/*": "./lib/middleware/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "esm"
+  ],
   "dependencies": {
     "fetch-retry": "^5.0.6"
   },
