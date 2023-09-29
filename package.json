@@ -2,11 +2,19 @@
   "name": "@cyzeal/fetch-onion-model",
   "version": "0.0.2",
   "description": "一个基于 Web Fetch Api 的轻量级 Http 请求增强工具，支持浏览器与 Node 环境，类似于 koa 的洋葱模型，以中间件形式扩展功能。",
+  "keywords": [
+    "fetch",
+    "ajax",
+    "request"
+  ],
   "sideEffects": false,
   "type": "module",
   "main": "lib/index.js",
   "module": "esm/index.js",
   "types": "esm/index.d.ts",
+  "homepage": "https://github.com/chenyzable/lint-config-lib#readme",
+  "author": "chenyzable <chenyz811@foxmail.com>",
+  "license": "MIT",
   "scripts": {
     "lint": "eslint src --max-warnings=0",
     "test": "vitest",
