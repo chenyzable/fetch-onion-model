@@ -12,7 +12,7 @@
   "main": "lib/index.js",
   "module": "esm/index.js",
   "types": "esm/index.d.ts",
-  "homepage": "https://github.com/chenyzable/lint-config-lib#readme",
+  "homepage": "https://github.com/chenyzable/fetch-onion-model#readme",
   "author": "chenyzable <chenyz811@foxmail.com>",
   "license": "MIT",
   "scripts": {

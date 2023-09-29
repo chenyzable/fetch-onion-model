@@ -6,15 +6,21 @@
 
 Using npm
 
-`npm i -S @cyzeal/fetch-onion-model`
+```shell
+npm i -S @cyzeal/fetch-onion-model
+```
 
 Using yarn
 
-`yarn add @cyzeal/fetch-onion-model`
+```shell
+yarn add @cyzeal/fetch-onion-model
+```
 
 Using pnpm
 
-`pnpm add @cyzeal/fetch-onion-model`
+```shell
+pnpm add @cyzeal/fetch-onion-model
+```
 
 ## Usage
 
