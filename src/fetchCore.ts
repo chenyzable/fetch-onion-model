@@ -16,7 +16,7 @@ const fetchCore = (): MiddleWare => {
     } = ctx
 
     let fullUrlWithParams = url
-    if (baseUrl) {
+    if (baseUrl && !/^https?:\/\//.test(url)) {
       fullUrlWithParams = baseUrl + fullUrlWithParams
     }
 

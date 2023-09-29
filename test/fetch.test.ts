@@ -72,4 +72,14 @@ describe("test create function", () => {
       data: defaultHeaders,
     })
   })
+
+  it("absolute path show be cover baseUrl", async () => {
+    const instance = create({
+      baseUrl: "https://xxx.com",
+    })
+    const res = await instance(prefix("/simpleGet"), {
+      params: { text: "rewrite baseUrl" },
+    })
+    expect(res).equals("mock response text: rewrite baseUrl")
+  })
 })
