@@ -1,4 +1,4 @@
-import type { MiddleWare } from "./interface"
+import type { MiddleWare, TParam } from "./interface"
 import { isPlainObject, defaultParamsSerialize } from "./utils"
 
 const fetchCore = (): MiddleWare => {
@@ -27,7 +27,7 @@ const fetchCore = (): MiddleWare => {
       querystring =
         typeof transformParams === "function"
           ? transformParams(params)
-          : defaultParamsSerialize(params)
+          : defaultParamsSerialize(params as TParam)
     }
     if (querystring) {
       if (fullUrlWithParams.indexOf("?") === -1) {

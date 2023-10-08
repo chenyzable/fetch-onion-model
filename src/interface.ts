@@ -40,6 +40,6 @@ export interface RequestOptions<R = TBody, D = TData, P = TParam>
 
 export type NextFunction = () => Promise<void>
 
-export type MiddleWare = (ctx: Context, next: NextFunction) => Promise<void>
+export type MiddleWare = (ctx: Context<any, any, any>, next: NextFunction) => Promise<void>
 
 export {}
