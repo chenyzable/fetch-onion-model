@@ -36,6 +36,7 @@ export interface RequestOptions<R = TBody, D = TData, P = TParam>
   transformResponse?: (response: Response) => R | Promise<R>
   validStatus?: (response: Response) => boolean
   onError?: (error: Error, context: Context) => void
+  [key: string]: any
 }
 
 export type NextFunction = () => Promise<void>

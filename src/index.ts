@@ -1,3 +1,4 @@
+import type { RequestInitWithRetry } from "fetch-retry"
 import type {
   RequestOptions,
   RequestMethod,
@@ -13,18 +14,38 @@ import fetchCore from "./fetchCore"
 
 const createContext = <R, D, P>(url: string, options?: RequestOptions<R, D, P>) => {
   const {
+    // fetch的所有options
+    body,
+    cache,
+    credentials,
+    headers,
+    integrity,
+    keepalive,
     method = "GET",
-    baseUrl,
+    mode,
+    redirect,
+    referrer,
+    referrerPolicy,
+    signal,
+    window,
+    retries,
+    retryDelay,
+    retryOn,
+    next,
+    // 自定义其它配置项
     params = null,
     data = null,
-    timeout,
     fetch = globalThis.fetch,
-    onError,
-    validStatus,
-    transformParams,
-    transformResponse,
-    headers,
-    ...other
+    // baseUrl,
+    // params = null,
+    // data = null,
+    // timeout,
+    // fetch = globalThis.fetch,
+    // onError,
+    // validStatus,
+    // transformParams,
+    // transformResponse,
+    ...otherOptions
   } = options || {}
 
   const normalizeHttpHeader = (headersInit?: HeadersInit) => {
@@ -35,23 +56,40 @@ const createContext = <R, D, P>(url: string, options?: RequestOptions<R, D, P>) 
     return header
   }
 
+  const fetchOptions: RequestInitWithRetry = {
+    method: method.toUpperCase() as RequestMethod,
+    headers: normalizeHttpHeader(headers),
+    body,
+    cache,
+    credentials,
+    integrity,
+    keepalive,
+    mode,
+    redirect,
+    referrer,
+    referrerPolicy,
+    signal,
+    window,
+    retries,
+    retryDelay,
+    retryOn,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore next.js扩展配置
+    next,
+  }
+
   const context: Context<R, D, P> = {
+    ...otherOptions,
     url,
-    baseUrl,
     params,
     data,
     body: null,
     response: null,
-    timeout,
     fetch,
-    transformParams,
-    transformResponse,
-    validStatus,
-    onError,
     options: {
       method: method.toUpperCase() as RequestMethod,
       headers: normalizeHttpHeader(headers),
-      ...other,
+      ...fetchOptions,
     },
   }
 

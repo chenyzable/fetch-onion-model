@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest"
+import type { MiddleWare } from "../src"
 import request, { create } from "../src"
 import { prefix } from "./mock/server"
 
@@ -81,5 +82,21 @@ describe("test create function", () => {
       params: { text: "rewrite baseUrl" },
     })
     expect(res).equals("mock response text: rewrite baseUrl")
+  })
+
+  it("requestOption field should be get in context", async () => {
+    const testMiddleware: MiddleWare = async (ctx, next) => {
+      await next()
+      ctx.body = `The customField is ${ctx.customField}`
+    }
+    const instance = create(
+      {
+        baseUrl: "https://mock.com",
+        customField: "foo",
+      },
+      [testMiddleware],
+    )
+    const res = await instance("/simpleGet")
+    expect(res).toBe("The customField is foo")
   })
 })
