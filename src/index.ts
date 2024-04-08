@@ -49,11 +49,7 @@ const createContext = <R, D, P>(url: string, options?: RequestOptions<R, D, P>) 
   } = options || {}
 
   const normalizeHttpHeader = (headersInit?: HeadersInit) => {
-    const header = new Headers(headersInit)
-    if (!header.has("Content-Type")) {
-      header.append("Content-Type", "application/json")
-    }
-    return header
+    return new Headers(headersInit)
   }
 
   const fetchOptions: RequestInitWithRetry = {

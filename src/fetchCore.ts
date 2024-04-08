@@ -39,6 +39,7 @@ const fetchCore = (): MiddleWare => {
 
     if (!options.body && data) {
       if (isPlainObject(data)) {
+        ;(options.headers as Headers).append("Content-Type", "application/json")
         options.body = JSON.stringify(data)
       } else {
         options.body = data as BodyInit

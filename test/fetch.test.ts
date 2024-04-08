@@ -55,22 +55,18 @@ describe("test request", () => {
 
 describe("test create function", () => {
   it("show be work", async () => {
-    const defaultHeaders: HeadersInit = {
-      "x-token": "123",
-      "x-uuid": "asafbaskfajslnfclas",
-    }
     const instance = create({
       method: "POST",
-      headers: defaultHeaders,
+      baseUrl: prefix(""),
     })
-    const res = await instance<Response>(prefix("/forwardHeader"), {
+    const res = await instance<Response>("/simplePost", {
       transformResponse: (response) => response,
     })
     expect(res).toBeInstanceOf(Response)
     const body = await res.json()
     expect(body).toEqual({
       success: true,
-      data: defaultHeaders,
+      data: "ok",
     })
   })
 

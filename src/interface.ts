@@ -1,8 +1,8 @@
 import type { RequestInitRetryParams } from "fetch-retry"
 
-export type TParam = Record<string, unknown>
+export type TParam = any
 export type TData = Record<string, unknown> | BodyInit
-export type TBody = Record<string, unknown> | string
+export type TBody = any
 
 export type RequestMethod = ("GET" | "POST" | "PUT" | "DELETE" | "OPTIPN" | "HEAD") & string
 
